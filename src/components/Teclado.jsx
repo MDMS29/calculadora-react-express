@@ -177,7 +177,7 @@ const Teclado = ({ setModal, result, setResult, historial, setHistorial }) => {
     const Calculate = async() => {
         if(result == "") return
         try{
-            const respuesta = await fetch(`http://localhost:4000/operacion/${result}`)
+            const respuesta = await fetch(`https://heroku-express29.herokuapp.com/operacion/${result}`)
             const resul = await respuesta.json()
             setResult(resul.resultado)
         }catch(error){console.log(error)}
