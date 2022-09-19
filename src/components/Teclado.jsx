@@ -167,22 +167,31 @@ const ImgHisto = styled.img`
     `
 
 const Teclado = ({ setModal, result, setResult, historial, setHistorial }) => {
-    
+
     useEffect(() => {
         localStorage.setItem('resultados', JSON.stringify(historial) ?? [])
     }, [result])
 
     //Mostrar cada numero
     const handleClick = (e) => setResult(result.concat(e.target.name))
-    const Calculate = async() => {
-        if(result == "") return
-        try{
-            const respuesta = await fetch(`https://heroku-express29.herokuapp.com/operacion/${result}`)
+    const Calculate = async () => {
+        if (result == "") return
+        const operacion = {
+            numero: {
+                resultado : result
+            }
+        }
+        const ruta = JSON.stringify(operacion)
+        console.log(ruta)
+        try {
+            // const respuesta = await fetch(`https://heroku-express29.herokuapp.com/operacion/${operacion}`)
+            const respuesta = await fetch(`http://localhost:3000/operacion/${ruta}`)//Pasar a JSON la operacion para no desviar la ruta con "/"
             const resul = await respuesta.json()
+            console.log(resul)
             setResult(resul.resultado)
-        }catch(error){console.log(error)}
+        } catch (error) { console.log(error) }
         const acciones = {
-            id:  generarID(),
+            id: generarID(),
             operacion: result
         }
         setHistorial([...historial, acciones])
