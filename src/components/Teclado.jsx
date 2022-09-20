@@ -186,7 +186,7 @@ const Teclado = ({ setModal, result, setResult, historial, setHistorial,div, set
         const operacion = {numero: div}  //Se pasa la parte que tiene las operaciones que no tengan interferencia 
         const ruta = JSON.stringify(operacion)
         try {
-            const respuesta = await fetch(`https://servidor-express29.herokuapp.com/operacion/${operacion}`)
+            const respuesta = await fetch(`https://servidor-express29.herokuapp.com/operacion/${ruta}`)
             // const respuesta = await fetch(`http://localhost:3000/operacion/${ruta}`)
             const resul = await respuesta.json()
             console.log(resul)
