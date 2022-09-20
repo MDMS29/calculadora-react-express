@@ -10,6 +10,7 @@ function App() {
   const [result, setResult] = useState("")
   const [historial, setHistorial] = useState(JSON.parse(localStorage.getItem('resultados')) ?? [])
   const [modal, setModal] = useState(false)
+  const [div, setDiv] = useState("")
 
 
   return (
@@ -24,6 +25,8 @@ function App() {
         />}
         <div>
           <Calculadora
+            div={div}
+            setDiv={setDiv}
             setModal={setModal}
             result={result}
             setResult={setResult}

@@ -166,28 +166,29 @@ const ImgHisto = styled.img`
     }
     `
 
-const Teclado = ({ setModal, result, setResult, historial, setHistorial }) => {
+const Teclado = ({ setModal, result, setResult, historial, setHistorial,div, setDiv }) => {
 
     useEffect(() => {
         localStorage.setItem('resultados', JSON.stringify(historial) ?? [])
     }, [result])
 
     //Mostrar cada numero
-    const handleClick = (e) => setResult(result.concat(e.target.name))
+    const handleClick = (e) => {
+        setResult(result.concat(e.target.name))//Toma los valores cada vez que se clickee
+        setDiv(div.concat(e.target.name))//Toma los valores cada vez que se clickee
+    }
+    const handleDiv = (e) => {
+        setResult(result.concat(e.target.name))//Toma los valores cada vez que se clickee
+        setDiv(result.concat("%2F"))//Toma los valores del "result" y concatena el valor de la division para no tener problemas con la ruta al poner "/"
+    }
     const Calculate = async () => {
         if (result == "") return
-        const operacion = {
-            numero: {
-                resultado : result
-            }
-        }
+        const operacion = {numero: div}  //Se pasa la parte que tiene las operaciones que no tengan interferencia 
         const ruta = JSON.stringify(operacion)
-        console.log(ruta)
         try {
-            // const respuesta = await fetch(`https://heroku-express29.herokuapp.com/operacion/${operacion}`)
-            const respuesta = await fetch(`http://localhost:3000/operacion/${ruta}`)//Pasar a JSON la operacion para no desviar la ruta con "/"
+            const respuesta = await fetch(`https://git.heroku.com/heroku-express29.git/operacion/${operacion}`)
+            // const respuesta = await fetch(`http://localhost:3000/operacion/${ruta}`)
             const resul = await respuesta.json()
-            console.log(resul)
             setResult(resul.resultado)
         } catch (error) { console.log(error) }
         const acciones = {
@@ -210,7 +211,7 @@ const Teclado = ({ setModal, result, setResult, historial, setHistorial }) => {
             <Boton name="7" onClick={handleClick}>7</Boton>
             <Boton name="8" onClick={handleClick}>8</Boton>
             <Boton name="9" onClick={handleClick}>9</Boton>
-            <Signos name="/" onClick={handleClick}>/</Signos>
+            <Signos name="/" onClick={handleDiv}>/</Signos>
 
             <Boton name="4" onClick={handleClick}>4</Boton>
             <Boton name="5" onClick={handleClick}>5</Boton>
